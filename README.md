@@ -2,7 +2,6 @@
 
 A simple Base64 encoder made for learning purpose. This could be done using in-built Base64 encoder too.
 
-<br>
 
 ### HOW TO
 
