@@ -1,6 +1,6 @@
 # Base64
 
-A simple Base64 encoder made for learning purpose. This could be done using in-built Base64 encoder too.
+A simple Base64 encoder made for learning purpose. This could be done using in-built Base64 encoder too. Code Written by Kumaraswamy B G.
 
 
 ### HOW TO
