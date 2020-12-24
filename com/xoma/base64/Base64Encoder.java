@@ -11,8 +11,12 @@ public class Base64Encoder {
 
     public String convert() {
         StringJoiner binaryForm = new StringJoiner(" ");
-        for(Byte b : this.inputData) binaryForm.add(String.format("%08d",
-                Integer.parseInt(Integer.toBinaryString(b))));
+        for(Byte b : this.inputData) {
+            String binary = Integer.toBinaryString(b);
+            if(binary.length() < 8) {
+                binaryForm.add(String.format("%08d", Integer.parseInt(binary)));
+            } else binaryForm.add(binary);
+        }
 
         StringBuilder paddedBinary = new StringBuilder(binaryForm.toString());
         int totalBits = binaryForm.length() - (binaryForm.length() - binaryForm.toString().
@@ -27,17 +31,15 @@ public class Base64Encoder {
         String[] sixBitsEncoded = paddedBinary.toString().replaceAll(" ", "").split("(?<=\\G......)");
 
         char[] data = new char[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                                  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                                  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                                  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                                  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'};
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'};
 
         StringBuilder base64 = new StringBuilder();
 
         for(String binary : sixBitsEncoded) {
-            int decimal = Integer.parseInt(binary, 2);
-            if(decimal != 0)
-                base64.append(data[decimal]);
+            base64.append(data[Integer.parseInt(binary, 2)]);
         }
 
         if(base64.length() % 4 != 0) {
